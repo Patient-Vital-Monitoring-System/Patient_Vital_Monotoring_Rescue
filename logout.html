@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout - Patient Vital Monitoring Rescue</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar-top">
+        <h2 class="navbar-brand">Patient Vitals Rescue</h2>
+    </nav>
+
+    <div class="container d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+        <div class="text-center">
+            <h1 id="logout-message">Logging out...</h1>
+            <p id="logout-status">Please wait while we log you out securely.</p>
+            <div class="spinner-border mt-3" id="logout-spinner" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Logout functionality
+        function performLogout() {
+            
+            // Clear session storage
+            sessionStorage.clear();
+            
+            // Clear local storage (if storing user session data)
+            localStorage.removeItem('userSession');
+            localStorage.removeItem('authToken');
+            
+            // Clear all cookies
+            document.cookie.split(";").forEach(function(c) {
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+            });
+
+            // Update UI with success message
+            const message = document.getElementById('logout-message');
+            const status = document.getElementById('logout-status');
+            const spinner = document.getElementById('logout-spinner');
+
+            message.textContent = 'You have been logged out successfully!';
+            status.textContent = 'Redirecting to login page...';
+            spinner.style.display = 'none';
+
+            // Redirect to home/login page after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        }
+
+        // Run logout on page load
+        window.addEventListener('DOMContentLoaded', performLogout);
+    </script>
+</body>
+</html>
