@@ -19,43 +19,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['incident_id'])) {
     $bp          = $conn->real_escape_string($_POST['blood_pressure']);
     $spo2        = (float)$_POST['spo2'];
     $temp        = (float)$_POST['temperature'];
-    $respRate    = isset($_POST['respiratory_rate']) ? (int)$_POST['respiratory_rate'] : null;
-    $gcs         = isset($_POST['gcs_score']) ? (int)$_POST['gcs_score'] : null;
+    $respRate    = !empty($_POST['respiratory_rate']) ? (int)$_POST['respiratory_rate'] : null;
+    $gcs         = !empty($_POST['gcs_score']) ? (int)$_POST['gcs_score'] : null;
     $notes       = $conn->real_escape_string($_POST['notes'] ?? '');
     $recordedBy  = $conn->real_escape_string("rescuer:$rescuerName");
 
     /* Verify this incident belongs to rescuer and is ongoing */
     $check = $conn->query("SELECT incident_id FROM incident WHERE incident_id=$incidentId AND rescuer_id=$rescuerId AND status='ongoing' LIMIT 1");
     if ($check && $check->num_rows > 0) {
-        $stmt = $conn->prepare("
-            INSERT INTO vitalstat
-            (incident_id, heart_rate, blood_pressure, spo2, temperature, respiratory_rate, gcs_score, notes, recorded_by, recorded_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
-        ");
-        $stmt->bind_param("iisisiiiss", $incidentId, $heartRate, $bp, $spo2, $temp, $respRate, $gcs, $notes, $recordedBy);
 
-        /* Fix: use correct bind types */
-        $stmt->close();
-        $stmt = $conn->prepare("
-            INSERT INTO vitalstat
-            (incident_id, heart_rate, blood_pressure, spo2, temperature, respiratory_rate, gcs_score, notes, recorded_by, recorded_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
-        ");
-        $stmt->bind_param("iiddiis ss", $incidentId, $heartRate, $spo2, $temp, $respRate, $gcs, $notes, $bp, $recordedBy);
-        $stmt->close();
+        $respRateVal = !empty($respRate) ? (int)$respRate : 'NULL';
+        $gcsVal      = !empty($gcs)      ? (int)$gcs      : 'NULL';
 
-        /* Simplified direct query */
-        $respRateVal = $respRate ? $respRate : 'NULL';
-        $gcsVal = $gcs ? $gcs : 'NULL';
         $sql = "INSERT INTO vitalstat
             (incident_id, heart_rate, blood_pressure, spo2, temperature, respiratory_rate, gcs_score, notes, recorded_by, recorded_at)
             VALUES
             ($incidentId, $heartRate, '$bp', $spo2, $temp, $respRateVal, $gcsVal, '$notes', '$recordedBy', NOW())";
+
         if ($conn->query($sql)) {
             $success = "Vital reading recorded successfully.";
         } else {
             $error = "Failed to save vitals: " . $conn->error;
         }
+
     } else {
         $error = "Invalid incident or not in ongoing status.";
     }

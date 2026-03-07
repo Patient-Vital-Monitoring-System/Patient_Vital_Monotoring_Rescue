@@ -101,20 +101,20 @@ CREATE TABLE IF NOT EXISTS device_log (
 -- SAMPLE DATA
 -- ============================================================
 
-INSERT INTO users (username, password_hash, role, rescuer_id) 
-VALUES ('rescuer1', 'pass123', 'rescuer', 1);
+INSERT INTO users (username, password_hash, role, rescuer_id) VALUES
+('rescuer1', '$2y$12$examplehashedpassword1234567890abcdef', 'rescuer', 1);
 
 INSERT INTO patient (full_name, age, gender, blood_type, allergies, medical_history, contact_number) VALUES
-('Marie Sans',   34, 'female', 'O+',  'Penicillin',    'Hypertension',   '09171234567'),
-('Jade Dell', 52, 'male',   'A+',  'None',          'Diabetes Type 2','09181234567'),
-('Anny Reels',      28, 'female', 'B+',  'Sulfa drugs',   'Asthma',         '09191234567'),
-('Carlo Menco', 67, 'male',   'AB-', 'Aspirin',       'Heart disease',  '09201234567');
+('Maria Santos',   34, 'female', 'O+',  'Penicillin',    'Hypertension',   '09171234567'),
+('Juan dela Cruz', 52, 'male',   'A+',  'None',          'Diabetes Type 2','09181234567'),
+('Ana Reyes',      28, 'female', 'B+',  'Sulfa drugs',   'Asthma',         '09191234567'),
+('Carlos Mendoza', 67, 'male',   'AB-', 'Aspirin',       'Heart disease',  '09201234567');
 
 INSERT INTO incident (patient_id, rescuer_id, incident_type, severity, status, location, start_time) VALUES
-(1, 1, 'Cardiac Arrest',       'critical', 'transferred', 'Brgy. Poblacion, Libona',    NOW() - INTERVAL 2 HOUR),
-(2, 1, 'Diabetic Emergency',   'high',     'ongoing',     'Purok 3, Laturan',           NOW() - INTERVAL 5 HOUR),
-(3, 1, 'Respiratory Distress', 'medium',   'completed',   'Brgy. San Jose, Purok 3',   NOW() - INTERVAL 1 DAY),
-(4, 1, 'Trauma — MVA',         'high',     'completed',   'Purok 8, Pongol',        NOW() - INTERVAL 3 DAY);
+(1, 1, 'Cardiac Arrest',       'critical', 'transferred', 'Brgy. Poblacion, Main St.',    NOW() - INTERVAL 2 HOUR),
+(2, 1, 'Diabetic Emergency',   'high',     'ongoing',     'Purok 3, Rizal Ave.',           NOW() - INTERVAL 5 HOUR),
+(3, 1, 'Respiratory Distress', 'medium',   'completed',   'Brgy. San Jose, Mabini St.',   NOW() - INTERVAL 1 DAY),
+(4, 1, 'Trauma — MVA',         'high',     'completed',   'National Highway Km 12',        NOW() - INTERVAL 3 DAY);
 
 INSERT INTO vitalstat (incident_id, heart_rate, blood_pressure, spo2, temperature, respiratory_rate, gcs_score, notes, recorded_by) VALUES
 (2, 112, '145/90', 96.0, 37.2, 20, 15, 'Patient conscious, diaphoretic', 'rescuer:rescuer1'),

@@ -82,6 +82,10 @@ $recentQ = $conn->query("
     <div class="section-card-header">⚡ Quick Actions</div>
     <div class="section-card-body">
         <div class="quick-actions-grid">
+            <a href="add_patient.php" class="action-btn">
+                <span class="action-icon">➕</span>
+                Add<br>Patient
+            </a>
             <a href="incoming.php" class="action-btn">
                 <span class="action-icon">📥</span>
                 Incoming<br>Incidents
@@ -97,6 +101,10 @@ $recentQ = $conn->query("
             <a href="return_device.php" class="action-btn">
                 <span class="action-icon">📦</span>
                 Return<br>Device
+            </a>
+            <a href="records.php" class="action-btn">
+                <span class="action-icon">📋</span>
+                View<br>Records
             </a>
         </div>
     </div>

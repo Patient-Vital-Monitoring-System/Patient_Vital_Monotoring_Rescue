@@ -18,8 +18,8 @@ function navLink($href, $icon, $label, $current) {
         <span class="navbar-toggler-icon"></span>
     </button>
     <div>
-        <h2 class="navbar-brand">Patient Vitals Rescue
-            <span>Rescuer System</span>
+        <h2 class="navbar-brand">RescueNet
+            <span>Rescuer Portal</span>
         </h2>
     </div>
     <div class="navbar-right">
@@ -37,7 +37,7 @@ function navLink($href, $icon, $label, $current) {
 
     <div class="offcanvas-header">
         <div class="d-flex" style="width:100%;justify-content:space-between;align-items:center;">
-            <span class="offcanvas-title">Patient Vitals Rescue</span>
+            <span class="offcanvas-title">🚑 RescueNet</span>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="sidebar-user">
@@ -48,14 +48,16 @@ function navLink($href, $icon, $label, $current) {
 
     <div class="offcanvas-body">
         <div class="sidebar-section-label">Main</div>
-        <?php navLink('dashboard.php',  '🏠', 'Dashboard',           $currentPage); ?>
-        <?php navLink('incoming.php',   '📥', 'Incoming Incidents',  $currentPage); ?>
-        <?php navLink('monitoring.php', '❤️', 'Continue Monitoring', $currentPage); ?>
-        <?php navLink('complete.php',   '✅', 'Complete Incident',   $currentPage); ?>
+        <?php navLink('dashboard.php',   '🏠', 'Dashboard',           $currentPage); ?>
+        <?php navLink('add_patient.php', '➕', 'Add Patient',         $currentPage); ?>
+        <?php navLink('incoming.php',    '📥', 'Incoming Incidents',  $currentPage); ?>
+        <?php navLink('monitoring.php',  '❤️', 'Continue Monitoring', $currentPage); ?>
+        <?php navLink('complete.php',    '✅', 'Complete Incident',   $currentPage); ?>
 
         <hr class="sidebar-divider">
         <div class="sidebar-section-label">Records</div>
         <?php navLink('records.php',      '📋', 'Incident Records',  $currentPage); ?>
+        <?php navLink('edit_patient.php', '✏️', 'Edit Records',      $currentPage); ?>
         <?php navLink('return_device.php','📦', 'Return Device',     $currentPage); ?>
 
         <hr class="sidebar-divider">

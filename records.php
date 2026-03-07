@@ -226,12 +226,17 @@ new Chart(ctx, {
 <?php endif; ?>
 
 <!-- ACTIONS -->
-<?php if ($detail['status'] === 'ongoing'): ?>
-<div style="padding:0 16px 24px;display:flex;gap:10px;">
-    <a href="monitoring.php?id=<?= $detail['incident_id'] ?>" class="btn btn-primary" style="flex:1;">❤️ Add Vitals</a>
-    <a href="complete.php?id=<?= $detail['incident_id'] ?>" class="btn btn-secondary" style="flex:1;">✅ Complete</a>
+<div style="padding:0 16px 24px;display:flex;flex-direction:column;gap:10px;">
+    <a href="edit_patient.php?id=<?= $detail['incident_id'] ?>" class="btn btn-primary btn-full btn-lg">
+        ✏️ Edit This Record
+    </a>
+    <?php if ($detail['status'] === 'ongoing'): ?>
+    <div style="display:flex;gap:10px;">
+        <a href="monitoring.php?id=<?= $detail['incident_id'] ?>" class="btn btn-secondary" style="flex:1;">❤️ Add Vitals</a>
+        <a href="complete.php?id=<?= $detail['incident_id'] ?>" class="btn btn-secondary" style="flex:1;">✅ Complete</a>
+    </div>
+    <?php endif; ?>
 </div>
-<?php endif; ?>
 
 <?php else: /* LIST VIEW */ ?>
 
@@ -280,6 +285,10 @@ new Chart(ctx, {
                     <span class="text-muted">· <?= ucfirst(str_replace('_',' ',$row['outcome'])) ?></span>
                     <?php endif; ?>
                 </div>
+            </a>
+            <a href="edit_patient.php?id=<?= $row['incident_id'] ?>"
+                style="display:block;text-align:center;margin-top:-6px;margin-bottom:4px;padding:8px;background:var(--light-bg);border:1px solid var(--border-light);border-radius:0 0 var(--radius) var(--radius);font-size:0.82rem;font-weight:700;color:var(--primary-red);text-decoration:none;">
+                ✏️ Edit Record
             </a>
             <?php endwhile; ?>
         </div>

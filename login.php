@@ -15,16 +15,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $q = $conn->query("SELECT * FROM users WHERE username='$username' AND role='rescuer' LIMIT 1");
     if ($q && $q->num_rows > 0) {
-    $user = $q->fetch_assoc();
-    if ($password === $user['password_hash']) {
-        $_SESSION['username']   = $user['username'];
-        $_SESSION['user_id']    = $user['user_id'];
-        $_SESSION['rescuer_id'] = $user['rescuer_id'] ?? 1;
-        $_SESSION['role']       = 'rescuer';
-        header("Location: dashboard.php");
-        exit;
+        $user = $q->fetch_assoc();
+        if (password_verify($password, $user['password_hash'])) {
+            $_SESSION['username']   = $user['username'];
+            $_SESSION['user_id']    = $user['user_id'];
+            $_SESSION['rescuer_id'] = $user['rescuer_id'] ?? 1;
+            $_SESSION['role']       = 'rescuer';
+            header("Location: dashboard.php");
+            exit;
+        }
     }
-}
     $error = "Invalid username or password.";
 }
 ?>
@@ -79,9 +79,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <div class="login-wrap">
     <div class="login-logo">
-        <div class="logo-icon"></div>
-        <h1>Patient Vitals Rescue</h1>
-        <p>Rescuer System</p>
+        <div class="logo-icon">🚑</div>
+        <h1>RescueNet</h1>
+        <p>Rescuer Portal</p>
     </div>
 
     <div class="login-card">
@@ -103,13 +103,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <button type="submit" class="btn btn-primary btn-full btn-lg" style="margin-top:8px;">
-                Sign In
+                🔐 Sign In
             </button>
         </form>
     </div>
 
     <p style="margin-top:20px;font-size:0.78rem;color:var(--text-muted);text-align:center;padding:0;">
-        Patient Vitals Rescue Emergency Response System
+        RescueNet Emergency Response System
     </p>
 </div>
 </body>
